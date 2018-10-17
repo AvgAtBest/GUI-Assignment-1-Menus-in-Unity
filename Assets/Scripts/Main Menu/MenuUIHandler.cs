@@ -24,7 +24,9 @@ public class MenuUIHandler : MonoBehaviour
     public Dropdown resolutionDropdown, graphicsDropdown;
     public Slider brightnessSlider;
     public Light lightSource;
-
+    public GameObject mainMenu;
+    public GameObject optionsMenu;
+    public bool showOptions;
     #endregion
     #endregion
     void Start()
@@ -32,7 +34,6 @@ public class MenuUIHandler : MonoBehaviour
         #region Resolutions
         //resolutions variable grabs the available resolutions unity supports
         resolutions = Screen.resolutions;
-        resolutionDropdown = GameObject.Find("ResolutionDropDown").GetComponent<Dropdown>();
         //clears all the resolutions in the resloution drop down ui element
         resolutionDropdown.ClearOptions();
         //lists the available resolution options as a string
@@ -65,13 +66,14 @@ public class MenuUIHandler : MonoBehaviour
         musicAudio = GameObject.Find("MainMenu Music").GetComponent<AudioSource>();
         musicSlider.value = -25f;
         musicSlider.value = musicAudio.volume;
+        
         effectsAudioSlider.value = -25f;
         //musicSlider.value = PlayerPrefs.GetFloat("MainMixer", -25f);
         //effectsAudioSlider.value = PlayerPrefs.GetFloat("SoundEffect", -25f);
         #endregion
 
         #region Brightness
-        brightnessSlider = GameObject.Find("BrightnessSlider").GetComponent<Slider>();
+        //brightnessSlider = GameObject.Find("BrightnessSlider").GetComponent<Slider>();
         #endregion
 
     }
@@ -92,6 +94,43 @@ public class MenuUIHandler : MonoBehaviour
     {
         Debug.Log("Quit it");
         Application.Quit();
+    }
+    public void ToggleOptions()
+    {
+        OptionToggle();
+
+    }
+    bool OptionToggle()
+    {
+        if (showOptions)//showOptions == true or showOptions is true
+        {
+            showOptions = false;
+            //Set to not display Options Menu as it is not actived
+            mainMenu.SetActive(true);
+            //Show Main Menu as Options is not being viewed
+            optionsMenu.SetActive(false);
+            //
+            return true;
+            //
+        }
+        else
+        {
+            showOptions = true;
+            mainMenu.SetActive(false);
+            optionsMenu.SetActive(true);
+            musicSlider = GameObject.FindGameObjectWithTag("MusicSlider").GetComponent<Slider>();
+            effectsAudioSlider = GameObject.FindGameObjectWithTag("InterfaceEffectsSlider").GetComponent<Slider>();
+            resolutionDropdown = GameObject.Find("ResolutionDropDown").GetComponent<Dropdown>();
+            graphicsDropdown = GameObject.Find("QualityDropDown").GetComponent<Dropdown>();
+            //volumeSlider.value = mainAudio.volume;
+
+            brightnessSlider = GameObject.FindGameObjectWithTag("BrightnessSlider").GetComponent<Slider>();
+
+            //brightnessSlider.value = dirLight.intensity;
+            return false;
+
+
+        }
     }
     public void MasterVolume (float volume)
     {
@@ -118,6 +157,7 @@ public class MenuUIHandler : MonoBehaviour
     }
     public void EffectsVolume(float volume)
     {
+
         effectsMixer.SetFloat("SoundEffects", volume);
     }
     //Visual Quality function
