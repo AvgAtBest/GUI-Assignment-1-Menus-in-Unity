@@ -15,6 +15,7 @@ public class KeyBindings : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //string forward = PlayerPrefs.GetString("Forward");
         keys.Add("Forward",(KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Forward", "W")));
         keys.Add("Back", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Back", "S")));
         keys.Add("Left", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Left", "A")));
@@ -34,7 +35,13 @@ public class KeyBindings : MonoBehaviour
         testText.text = keys["Test"].ToString();
     }
 
-    // Update is called once per frame
+    //void OnApplicationPause(bool pauseStatus)
+    //{
+    //    if (pauseStatus)
+    //        SaveKeys();
+    //}
+
+
     void Update()
     {
         if (Input.GetKeyDown(keys["Forward"]))
@@ -95,5 +102,6 @@ public class KeyBindings : MonoBehaviour
             PlayerPrefs.SetString(key.Key, key.Value.ToString());
         }
         PlayerPrefs.Save();
+        Debug.Log("Save");
     }
 }

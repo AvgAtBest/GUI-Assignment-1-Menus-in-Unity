@@ -181,11 +181,13 @@ public class MenuUIHandler : MonoBehaviour
     }
     public void SetResolution(int resolutionIndex)
     {
+        //Sets the selected resolution in resolution index
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
     public void ToggleFullScreen (bool isFullscreen)
     {
+        //toggles fullscreen mode via bool in event system.
         Screen.fullScreen = isFullscreen;
 
     }
