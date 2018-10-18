@@ -12,22 +12,21 @@ public class MenuUIHandler : MonoBehaviour
     #region Variables
     #region Audio Refs
     [Header("Audio")]
-    public AudioSource musicAudio;
-    public AudioSource menuAudio, gameAudio;
-    public Slider musicSlider, gameAudioSlider, effectsAudioSlider;
-    public float volume;
-    public AudioMixer masterMixer, effectsMixer;
+    public AudioSource musicAudio;//reference for main menu music audiosource
+    public AudioSource menuAudio;//reference for interface sound effects audiosource
+    public float volume;//references for volume float value
+    public AudioMixer masterMixer, effectsMixer;//references for master audio mixer and interface effects audio mixer
     #endregion
     #region Visual Refs
     [Header("Visuals")]
-    public Resolution[] resolutions;
-    public Dropdown resolutionDropdown, graphicsDropdown;
-    public Slider brightnessSlider;
-    public Light lightSource;
-    public GameObject mainMenu;
-    public GameObject optionsMenu;
-    public bool showOptions;
-    public Image brightnessImage;
+    public Resolution[] resolutions;//reference for resolution index
+    public Dropdown resolutionDropdown, graphicsDropdown;//references for the resolution and graphics dropdown UI elements
+    public Slider brightnessSlider;//reference for the brightness slider UI element
+    public GameObject mainMenu;//reference to the gameobject menu panel
+    public GameObject optionsMenu;//reference to the gameobject menu panel
+    public bool showOptions;//bool for displaying options menu
+    public Image brightnessImage;//reference for the image ui element used to change brightness
+    public Slider musicSlider, effectsAudioSlider;//references for the main music slider and interface effects slider UI elements
     #endregion
     #endregion
     void Start()
@@ -88,6 +87,7 @@ public class MenuUIHandler : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //Scene manager grabs the next active scene in the build index and loads it.
     }
 
 
@@ -95,9 +95,11 @@ public class MenuUIHandler : MonoBehaviour
     {
         Debug.Log("Quit it");
         Application.Quit();
+        //Quits application
     }
     public void ToggleOptions()
     {
+        //calls the bool optiontoggle function
         OptionToggle();
 
     }
@@ -110,9 +112,9 @@ public class MenuUIHandler : MonoBehaviour
             mainMenu.SetActive(true);
             //Show Main Menu as Options is not being viewed
             optionsMenu.SetActive(false);
-            //
+            //returns the data as true
             return true;
-            //
+            
         }
         else
         {
@@ -128,7 +130,6 @@ public class MenuUIHandler : MonoBehaviour
             brightnessSlider = GameObject.Find("BrightnessSlider").GetComponent<Slider>();
             var tempColor = brightnessImage.color;
             brightnessSlider.value = 1.0f - tempColor.a;
-            //brightnessSlider.value = dirLight.intensity;
             return false;
 
 
@@ -151,12 +152,16 @@ public class MenuUIHandler : MonoBehaviour
         //menuAudio.volume = menuAudioSlider.value;
 
     }
+
+    //updates value of the sliders
     public void UpdateSliders()
     {
+        //PlayerPrefs obtains the value of the master mixer "Volume" and is named as musicValue variable
         float musicValue = PlayerPrefs.GetFloat("Volume");
-
+        //value of the slider that controls music is equal to the volume
         musicSlider.value = musicValue;
     }
+    //changes the volume of the interface effects
     public void EffectsVolume(float volume)
     {
 
@@ -165,11 +170,12 @@ public class MenuUIHandler : MonoBehaviour
     //Visual Quality function
     public void SetQuality(int qualityIndex)
     {
-        //Sets the visual Quality of Graphics by obtaining the graphics settings in Unity.
+        //Sets the visual Quality by obtaining the Quality settings set in Unity project settings as a index.
         QualitySettings.SetQualityLevel(qualityIndex);
     }
     public void ChangeBrightness()
     {
+        //temporary color is equal to the brightnessImage's color
         var tempColor = brightnessImage.color;
         tempColor.a = 0.5f - brightnessSlider.value;
         brightnessImage.color = tempColor;
@@ -177,18 +183,23 @@ public class MenuUIHandler : MonoBehaviour
         Debug.Log("Bright");
     }
 
+    //Saves the changed values/data to PlayerPrefs and sets it 
     public void SaveSettings()
     {
         PlayerPrefs.SetFloat("MainMixer", musicSlider.value);
         PlayerPrefs.SetFloat("SoundEffect", effectsAudioSlider.value);
 
     }
+    //Sets the resloution in the resolution index (int value)
     public void SetResolution(int resolutionIndex)
     {
-        //Sets the selected resolution in resolution index
+        //
         Resolution resolution = resolutions[resolutionIndex];
+        //Sets the selected resolution in the resolution index by its width and height. Also sets it as fullscreen.
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
+
+    //Toggles between windowed and fullscreen
     public void ToggleFullScreen (bool isFullscreen)
     {
         //toggles fullscreen mode via bool in event system.
