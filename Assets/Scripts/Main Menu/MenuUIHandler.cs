@@ -27,6 +27,7 @@ public class MenuUIHandler : MonoBehaviour
     public GameObject mainMenu;
     public GameObject optionsMenu;
     public bool showOptions;
+    public Image brightnessImage;
     #endregion
     #endregion
     void Start()
@@ -73,7 +74,7 @@ public class MenuUIHandler : MonoBehaviour
         #endregion
 
         #region Brightness
-        //brightnessSlider = GameObject.Find("BrightnessSlider").GetComponent<Slider>();
+        brightnessSlider.value = 0.5f;
         #endregion
 
     }
@@ -124,8 +125,9 @@ public class MenuUIHandler : MonoBehaviour
             graphicsDropdown = GameObject.Find("QualityDropDown").GetComponent<Dropdown>();
             //volumeSlider.value = mainAudio.volume;
 
-            brightnessSlider = GameObject.FindGameObjectWithTag("BrightnessSlider").GetComponent<Slider>();
-
+            brightnessSlider = GameObject.Find("BrightnessSlider").GetComponent<Slider>();
+            var tempColor = brightnessImage.color;
+            brightnessSlider.value = 1.0f - tempColor.a;
             //brightnessSlider.value = dirLight.intensity;
             return false;
 
@@ -168,7 +170,9 @@ public class MenuUIHandler : MonoBehaviour
     }
     public void ChangeBrightness()
     {
-
+        var tempColor = brightnessImage.color;
+        tempColor.a = 0.5f - brightnessSlider.value;
+        brightnessImage.color = tempColor;
 
         Debug.Log("Bright");
     }
