@@ -16,7 +16,20 @@ public class AudioMixerManager : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		
 	}
+    void MasterVolume()
+    {
+
+    }
+    void MusicVolume()
+    {
+
+    }
+    void EffectsVolume()
+    {
+
+    }
 }

@@ -26,7 +26,7 @@ public class MenuUIHandler : MonoBehaviour
     public GameObject optionsMenu;//reference to the gameobject menu panel
     public bool showOptions;//bool for displaying options menu
     public Image brightnessImage;//reference for the image ui element used to change brightness
-    public Slider musicSlider, effectsAudioSlider;//references for the main music slider and interface effects slider UI elements
+    public Slider masterSlider,musicSlider,effectsAudioSlider;//references for the main music slider and interface effects slider UI elements
     #endregion
     #endregion
     void Start()
@@ -121,7 +121,7 @@ public class MenuUIHandler : MonoBehaviour
             showOptions = true;
             mainMenu.SetActive(false);
             optionsMenu.SetActive(true);
-            musicSlider = GameObject.FindGameObjectWithTag("MusicSlider").GetComponent<Slider>();
+            masterSlider = GameObject.FindGameObjectWithTag("MasterSlider").GetComponent<Slider>();
             effectsAudioSlider = GameObject.FindGameObjectWithTag("InterfaceEffectsSlider").GetComponent<Slider>();
             resolutionDropdown = GameObject.Find("ResolutionDropDown").GetComponent<Dropdown>();
             graphicsDropdown = GameObject.Find("QualityDropDown").GetComponent<Dropdown>();
