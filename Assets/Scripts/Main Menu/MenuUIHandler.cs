@@ -63,7 +63,7 @@ public class MenuUIHandler : MonoBehaviour
         resolutionDropdown.RefreshShownValue();
         #endregion
         #region Sound
-        musicAudio = GameObject.Find("MainMenu Music").GetComponent<AudioSource>();
+        musicAudio = GameObject.Find("MainMenuMusic").GetComponent<AudioSource>();
         musicSlider.value = -25f;
         musicSlider.value = musicAudio.volume;
         
