@@ -3332,7 +3332,7 @@ AudioSource:
   m_GameObject: {fileID: 515364522}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 243150730161121416, guid: 5d45ec429a4c13c4ab65025ab0a77d6c,
+  OutputAudioMixerGroup: {fileID: 243615857867570074, guid: 666202145f75ce843884aeabf28c1dac,
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
@@ -5260,7 +5260,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 933566296}
         m_MethodName: EffectsVolume
-        m_Mode: 0
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
