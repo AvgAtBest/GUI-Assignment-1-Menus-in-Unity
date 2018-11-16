@@ -6,7 +6,16 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using TMPro;
+using System.IO;
+using System;
+using System.Xml.Serialization;
 
+[Serializable]
+public class SavedSettingsData
+{
+    public float volume;
+    
+}
 public class MenuUIHandler : MonoBehaviour
 {
     #region Variables
@@ -204,6 +213,14 @@ public class MenuUIHandler : MonoBehaviour
     {
         //toggles fullscreen mode via bool in event system.
         Screen.fullScreen = isFullscreen;
+
+    }
+    public void Save()
+    {
+
+    }
+    public void Load()
+    {
 
     }
 }
