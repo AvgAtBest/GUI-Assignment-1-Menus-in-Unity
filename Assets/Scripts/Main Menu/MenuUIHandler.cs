@@ -14,6 +14,12 @@ using System.Xml.Serialization;
 public class SavedSettingsData
 {
     public float volume;
+    public int savedResolution;
+    public bool fullScreen;
+    public int qualityIndex;
+    public QualitySettings graphics;
+    public float graphicstest;
+    public float brightnessSlider;
     
 }
 public class MenuUIHandler : MonoBehaviour
@@ -35,20 +41,41 @@ public class MenuUIHandler : MonoBehaviour
     public GameObject optionsMenu;//reference to the gameobject menu panel
     public bool showOptions;//bool for displaying options menu
     public Image brightnessImage;//reference for the image ui element used to change brightness
-    public Slider masterSlider,musicSlider,effectsAudioSlider;//references for the main music slider and interface effects slider UI elements
+    public Slider masterSlider, musicSlider, effectsAudioSlider;//references for the main music slider and interface effects slider UI elements
+    public List<string> resolutionOptions = new List<string>();
+    #endregion
+    #region Save
+    public static MenuUIHandler Instance = null;
+    public string saveFilePath;
+    public string fileName = "SettingsData";
+    public SavedSettingsData data = new SavedSettingsData();
     #endregion
     #endregion
-    void Start()
+
+    private void OnDestroy()
     {
+        Instance = null;
+        Save();
+    }
+    public void Awake()
+    {
+        Instance = this;
+        saveFilePath = Application.dataPath + "/SaveData/Data/" + fileName + ".xml";
+        if (File.Exists(saveFilePath))
+        {
+            Load();
+            brightnessSlider.value = 0.5f;
+
+        }
         #region Resolutions
         //resolutions variable grabs the available resolutions unity supports
         resolutions = Screen.resolutions;
         //clears all the resolutions in the resloution drop down ui element
         resolutionDropdown.ClearOptions();
         //lists the available resolution options as a string
-        List<string> options = new List<string>();
 
- 
+
+
         int currentResolutionIndex = 0;
         //loop through each element in the resolutions array
         for (int i = 0; i < resolutions.Length; i++)
@@ -56,10 +83,10 @@ public class MenuUIHandler : MonoBehaviour
             //displays a resolution option 
             string option = resolutions[i].width + "x" + resolutions[i].height;
             //adds the resolution option to our list
-            options.Add(option);
+            resolutionOptions.Add(option);
 
             //if resolutions is equal to the monitors resolutions (by comparing the width and the height of our resolution)
-            if (resolutions[i].width == Screen.currentResolution.width && 
+            if (resolutions[i].width == Screen.currentResolution.width &&
                 resolutions[i].height == Screen.currentResolution.height)
             {
                 //displays current resolution in index
@@ -67,30 +94,24 @@ public class MenuUIHandler : MonoBehaviour
             }
         }
         //adds the list with our resolution options to our dropdown
-        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.AddOptions(resolutionOptions);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
         #endregion
         #region Sound
         musicAudio = GameObject.Find("MainMenuMusic").GetComponent<AudioSource>();
         musicSlider.value = -25f;
         musicSlider.value = musicAudio.volume;
-        
+
         effectsAudioSlider.value = -25f;
         //musicSlider.value = PlayerPrefs.GetFloat("MainMixer", -25f);
         //effectsAudioSlider.value = PlayerPrefs.GetFloat("SoundEffect", -25f);
         #endregion
 
         #region Brightness
-        brightnessSlider.value = 0.5f;
+
         #endregion
-
-    }
-
-
-    void Update()
-    {
-
     }
 
     public void PlayGame()
@@ -123,7 +144,7 @@ public class MenuUIHandler : MonoBehaviour
             optionsMenu.SetActive(false);
             //returns the data as true
             return true;
-            
+
         }
         else
         {
@@ -144,7 +165,7 @@ public class MenuUIHandler : MonoBehaviour
 
         }
     }
-    public void MasterVolume (float volume)
+    public void MasterVolume(float volume)
     {
         masterMixer.SetFloat("Volume", volume);
 
@@ -209,7 +230,7 @@ public class MenuUIHandler : MonoBehaviour
     }
 
     //Toggles between windowed and fullscreen
-    public void ToggleFullScreen (bool isFullscreen)
+    public void ToggleFullScreen(bool isFullscreen)
     {
         //toggles fullscreen mode via bool in event system.
         Screen.fullScreen = isFullscreen;
@@ -217,10 +238,28 @@ public class MenuUIHandler : MonoBehaviour
     }
     public void Save()
     {
+        var serializer = new XmlSerializer(typeof(SavedSettingsData));
+        using (var stream = new FileStream(saveFilePath, FileMode.Create))
+        {
+            serializer.Serialize(stream, data);
+        }
+        data.fullScreen = Screen.fullScreen;
+
+        data.savedResolution = resolutionDropdown.value;
+        data.brightnessSlider = brightnessSlider.value;
 
     }
     public void Load()
     {
+        var serializer = new XmlSerializer(typeof(SavedSettingsData));
+        using (var stream = new FileStream(saveFilePath, FileMode.Open))
+        {
+            data = serializer.Deserialize(stream) as SavedSettingsData;
 
+
+        }
+        Screen.fullScreen = data.fullScreen;
+        brightnessSlider.value = data.brightnessSlider;
+        resolutionDropdown.value = data.savedResolution;
     }
 }

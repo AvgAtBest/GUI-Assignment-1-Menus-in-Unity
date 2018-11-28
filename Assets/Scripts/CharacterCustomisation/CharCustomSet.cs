@@ -84,11 +84,11 @@ public class CharCustomSet : MonoBehaviour
         {
             index = 0;
         }
-        MeshFilter[] mat = mesh.Add;
+        //MeshFilter[] mat = mesh.Add;
 
-        mat[mIndex] = pMesh[index];
+        //mat[mIndex] = pMesh[index];
 
-        meshFilt.mesh = mat;
+        //meshFilt.mesh = mat;
 
         switch (type)
         {

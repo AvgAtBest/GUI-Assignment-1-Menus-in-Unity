@@ -6209,6 +6209,17 @@ MonoBehaviour:
   masterSlider: {fileID: 0}
   musicSlider: {fileID: 1857086000}
   effectsAudioSlider: {fileID: 783944477}
+  resolutionOptions: []
+  saveFilePath: 
+  fileName: SettingsData
+  data:
+    volume: 0
+    savedResolution: 0
+    fullScreen: 0
+    qualityIndex: 0
+    graphics: {fileID: 0}
+    graphicstest: 0
+    brightnessSlider: 0
 --- !u!114 &933566297
 MonoBehaviour:
   m_ObjectHideFlags: 0
