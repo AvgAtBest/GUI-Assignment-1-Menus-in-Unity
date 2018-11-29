@@ -2823,7 +2823,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &425490142
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6209,7 +6209,6 @@ MonoBehaviour:
   masterSlider: {fileID: 0}
   musicSlider: {fileID: 1857086000}
   effectsAudioSlider: {fileID: 783944477}
-  resolutionOptions: []
   saveFilePath: 
   fileName: SettingsData
   data:
@@ -6217,8 +6216,6 @@ MonoBehaviour:
     savedResolution: 0
     fullScreen: 0
     qualityIndex: 0
-    graphics: {fileID: 0}
-    graphicstest: 0
     brightnessSlider: 0
 --- !u!114 &933566297
 MonoBehaviour:
@@ -7186,7 +7183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1055287310
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11268,7 +11265,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 933566296}
-        m_MethodName: SaveSettings
+        m_MethodName: Save
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11702,19 +11699,7 @@ MonoBehaviour:
   m_ItemImage: {fileID: 0}
   m_Value: 2
   m_Options:
-    m_Options:
-    - m_Text: 
-      m_Image: {fileID: 0}
-    - m_Text: 
-      m_Image: {fileID: 0}
-    - m_Text: 
-      m_Image: {fileID: 0}
-    - m_Text: 
-      m_Image: {fileID: 0}
-    - m_Text: 
-      m_Image: {fileID: 0}
-    - m_Text: 
-      m_Image: {fileID: 0}
+    m_Options: []
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
