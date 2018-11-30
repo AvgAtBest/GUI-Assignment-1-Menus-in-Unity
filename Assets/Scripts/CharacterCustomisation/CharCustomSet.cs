@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class CharCustomSet : MonoBehaviour
 {
-    #region CharRenderer
-    //public Mesh model1;
-    //public Mesh model2;
-    //public MeshFilter meshFilt;
-    //public List<MeshFilter> mesh = new List<MeshFilter>();
-    public List<Mesh> mesh = new List<Mesh>();
-    public MeshFilter meshFilt;
+    #region CharRenderer (TESTING)
 
+    //public Color[] color = new Color[10];
+    //public int colorMax;
+    public int modelMax;
+    public MeshFilter meshFilt;
+    public Mesh[] mesh;
+    public int modelIndex;
     #endregion
     #region CharClass
     public string[] statArray = new string[6]; //names of the available stats in the array
@@ -22,48 +22,25 @@ public class CharCustomSet : MonoBehaviour
     public CharacterClass charClass = CharacterClass.Warrior;//Available classes to be chosen (default set to warrior)
     public string[] selectedClass = new string[6];
     public int selectedIndex = 0;
-    public int modelIndex;
     #endregion
     #region Character
-    public string charName =  "Name";//player name
-    public Color[] color = new Color[10];
-    public int colorMax;
-    public int modelMax;
-    public PlayerModels charModels = PlayerModels.Box;
+    public string charName = "Name";//player name
     #endregion
+
 
     // Use this for initialization
     void Start()
-    {
-
-        //for each of the model 
-        //for (int i = 0; i < modelMax; i++)
-        //{
-        //    MeshFilter temp = Resources.Load("Library/unitydefaultresources" + i) as MeshFilter;
-        //    mesh.Add(temp);
-        //}
-        for (int i = 0; i < modelMax; i++)
-        {
-            Mesh temp = Resources.Load("Library/unitydefaultresources_" + i) as Mesh;
-            mesh.Add(temp);
-        }
-
-        meshFilt = GameObject.Find("CharModel").GetComponent<MeshFilter>();
-
-
-        //meshFilt = GameObject.Find("CharModel").GetComponent<MeshFilter>();
-        
-        //if (meshFilt)
-        //{
-        //    meshFilt.mesh = model1;
-        //}
-        SetTexture("Model", 0);
+    {  
+        meshFilt = GameObject.FindGameObjectWithTag("Player").GetComponent<MeshFilter>();
+        SetModel("Model", 0);
         statArray = new string[] { "Strength", "Agility", "Constitution", "Elemental", "Charisma", "Intelligence"};
+        selectedClass = new string[] { "Warrior", "Mage", "Tank", "Hunter", "Healer", "Thief" };
+        AvailableClasses(selectedIndex);
     }
-    void SetTexture(string type, int next)
+    void SetModel(string type, int next)
     {
         // int i = 0, next = 0,
-        int index = 0, max = 0, mIndex = 0;
+        int index = 0, max = 0;
         Mesh[] pMesh = new Mesh[0];
 
         switch (type)
@@ -71,11 +48,9 @@ public class CharCustomSet : MonoBehaviour
             case "Model":
                 index = modelIndex;
                 max = modelMax;
-                pMesh = mesh.ToArray();
-                mIndex = 1;
+
                 break;
         }
-
         index += next;
         if (index < 0)
         {
@@ -85,11 +60,7 @@ public class CharCustomSet : MonoBehaviour
         {
             index = 0;
         }
-        //MeshFilter[] mat = mesh.Add;
-
-        //mat[mIndex] = pMesh[index];
-
-        //meshFilt.mesh = mat;
+        meshFilt.mesh = mesh[index];
 
         switch (type)
         {
@@ -109,13 +80,13 @@ public class CharCustomSet : MonoBehaviour
         if (GUI.Button(new Rect(0.25f * scrW, scrH + i * (0.5f * scrH), 0.5f * scrW, 0.5f * scrH), "<"))
         {
             //when pressed the button will run SetTexture and grab the Skin Material and move the texture index in the direction  -1
-            SetTexture("Model", -1);
+            SetModel("Model", -1);
         }
         GUI.Box(new Rect(0.75f * scrW, scrH + i * (0.5f * scrH), 1f * scrW, 0.5f * scrH), "Model");
         //GUI button on the left of the screen with the contence >
         if (GUI.Button(new Rect(1.75f * scrW, scrH + i * (0.5f * scrH), 0.5f * scrW, 0.5f * scrH), ">"))
         {
-            SetTexture("Model", 1);
+            SetModel("Model", 1);
             //when pressed the button will run SetTexture and grab the Skin Material and move the texture index in the direction  1
         }
         i++;
@@ -197,8 +168,4 @@ public enum CharacterClass
     Thief
 
 }
-public enum PlayerModels
-{
-    Box,
-    Capsule
-}
+

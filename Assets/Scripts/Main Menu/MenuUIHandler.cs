@@ -27,9 +27,9 @@ public class MenuUIHandler : MonoBehaviour
     #region Audio Refs
     [Header("Audio")]
     public AudioSource musicAudio;//reference for main menu music audiosource
-    public AudioSource menuAudio;//reference for interface sound effects audiosource
+    public AudioSource interfaceAudio;//reference for interface sound effects audiosource
     public float volume;//references for volume float value
-    public AudioMixer masterMixer, effectsMixer;//references for master audio mixer and interface effects audio mixer
+    public AudioMixer musicAudioMixer, interfaceAudioMixer;//references for master audio mixer and interface effects audio mixer
     #endregion
     #region Visual Refs
     [Header("Visuals")]
@@ -40,7 +40,7 @@ public class MenuUIHandler : MonoBehaviour
     public GameObject optionsMenu;//reference to the gameobject menu panel
     public bool showOptions;//bool for displaying options menu
     public Image brightnessImage;//reference for the image ui element used to change brightness
-    public Slider masterSlider, musicSlider, effectsAudioSlider;//references for the main music slider and interface effects slider UI elements
+    public Slider musicSlider, interfaceAudioSlider;//references for the main music slider and interface effects slider UI elements
     public Toggle uiToggleFull;
     #endregion
     #region Save
@@ -96,7 +96,11 @@ public class MenuUIHandler : MonoBehaviour
         //musicSlider.value = -25f;
         //musicSlider.value = musicAudio.volume;
 
-        effectsAudioSlider.value = -25f;
+        interfaceAudioSlider.value = -25f;
+        musicSlider.value = -25f;
+        float musicValue = PlayerPrefs.GetFloat("Volume");
+        //value of the slider that controls music is equal to the volume
+        musicSlider.value = musicValue;
         //musicSlider.value = PlayerPrefs.GetFloat("MainMixer", -25f);
         //effectsAudioSlider.value = PlayerPrefs.GetFloat("SoundEffect", -25f);
         #endregion
@@ -149,8 +153,8 @@ public class MenuUIHandler : MonoBehaviour
             showOptions = true;
             mainMenu.SetActive(false);
             optionsMenu.SetActive(true);
-            masterSlider = GameObject.FindGameObjectWithTag("MasterSlider").GetComponent<Slider>();
-            effectsAudioSlider = GameObject.FindGameObjectWithTag("InterfaceEffectsSlider").GetComponent<Slider>();
+            musicSlider = GameObject.FindGameObjectWithTag("MusicSlider").GetComponent<Slider>();
+            interfaceAudioSlider = GameObject.FindGameObjectWithTag("InterfaceEffectsSlider").GetComponent<Slider>();
             resolutionDropdown = GameObject.Find("ResolutionDropDown").GetComponent<Dropdown>();
             graphicsDropdown = GameObject.Find("QualityDropDown").GetComponent<Dropdown>();
             //volumeSlider.value = mainAudio.volume;
@@ -163,9 +167,26 @@ public class MenuUIHandler : MonoBehaviour
 
         }
     }
-    public void MasterVolume(float volume)
+    public void MusicVolume(float musicVolume)
     {
-        masterMixer.SetFloat("Volume", volume);
+        musicAudioMixer.SetFloat("Volume", musicVolume);
+
+        //musicSlider.value = musicAudio.volume;
+        //audioMixer = musicSlider.value;
+        //musicSlider = GameObject.Find("Music Slider").GetComponent<Slider>();
+
+        //musicSlider.value = musicAudio.volume;
+        //musicAudio.volume = musicSlider.value;
+
+        //gameAudioSlider = GameObject.Find("Game Audio Slider").GetComponent<Slider>();
+
+        //menuAudioSlider = GameObject.Find("Sound Effects Slider").GetComponent<Slider>();
+        //menuAudio.volume = menuAudioSlider.value;
+
+    }
+    public void InterfaceVolume(float interfaceVolume)
+    {
+        interfaceAudioMixer.SetFloat("Volume", interfaceVolume);
 
         //musicSlider.value = musicAudio.volume;
         //audioMixer = musicSlider.value;
@@ -189,12 +210,8 @@ public class MenuUIHandler : MonoBehaviour
         //value of the slider that controls music is equal to the volume
         musicSlider.value = musicValue;
     }
-    //changes the volume of the interface effects
-    public void EffectsVolume(float volume)
-    {
+ 
 
-        effectsMixer.SetFloat("SoundEffects", volume);
-    }
     //Visual Quality function
     public void SetQuality(int qualityIndex)
     {
@@ -212,12 +229,7 @@ public class MenuUIHandler : MonoBehaviour
     }
 
     //Saves the changed values/data to PlayerPrefs and sets it 
-    public void SaveSettings()
-    {
-        PlayerPrefs.SetFloat("MainMixer", musicSlider.value);
-        PlayerPrefs.SetFloat("SoundEffect", effectsAudioSlider.value);
 
-    }
     //Sets the resloution in the resolution index (int value)
     public void SetResolution(int resolutionIndex)
     {

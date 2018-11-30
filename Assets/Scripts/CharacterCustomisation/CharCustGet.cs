@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class CharCustGet : MonoBehaviour
 {
-    public CharCustomSet charCustH;
-    public Mesh playerModel;
+    public Mesh[] meshes; 
+    public MeshFilter meshFilter;
+    public int id;
+    public float[] savedColour = new float[4];
+    public Color myColour;
 
-
-	// Use this for initialization
-	void Start ()
+    void Start ()
     {
-        playerModel = GameObject.Find("CharModel").GetComponent<Mesh>();
-	}
+        meshFilter.mesh = meshes[id];
+        myColour = new Vector4(savedColour[0], savedColour[1], savedColour[2], savedColour[3]);
+        this.GetComponent<MeshRenderer>().material.color = myColour;
+    }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }

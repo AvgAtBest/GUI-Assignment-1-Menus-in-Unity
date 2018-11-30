@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
         charC = GetComponent<CharacterController>();
         //playerCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         //playerCam.transform.SetParent(target);
+
     }
 
     // Update is called once per frame
