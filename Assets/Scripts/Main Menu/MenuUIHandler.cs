@@ -15,7 +15,7 @@ public class SavedSettingsData
 {
     public float volume;
     public int savedResolution;
-    public bool fullScreen;
+    public bool fullscreenPref;
     public int qualityIndex;
 
     public float brightnessSlider;
@@ -41,7 +41,7 @@ public class MenuUIHandler : MonoBehaviour
     public bool showOptions;//bool for displaying options menu
     public Image brightnessImage;//reference for the image ui element used to change brightness
     public Slider masterSlider, musicSlider, effectsAudioSlider;//references for the main music slider and interface effects slider UI elements
-    public Toggle toggleFullscreen;
+    public Toggle uiToggleFull;
     #endregion
     #region Save
     public static MenuUIHandler Instance = null;
@@ -89,7 +89,7 @@ public class MenuUIHandler : MonoBehaviour
         //adds the list with our resolution options to our dropdown
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.RefreshShownValue();
-
+        uiToggleFull.isOn = true;
         #endregion
         #region Sound
         //musicAudio = GameObject.Find("MainMenuMusic").GetComponent<AudioSource>();
@@ -154,7 +154,7 @@ public class MenuUIHandler : MonoBehaviour
             resolutionDropdown = GameObject.Find("ResolutionDropDown").GetComponent<Dropdown>();
             graphicsDropdown = GameObject.Find("QualityDropDown").GetComponent<Dropdown>();
             //volumeSlider.value = mainAudio.volume;
-
+            uiToggleFull = GameObject.Find("FullScreenToggle").GetComponent<Toggle>();
             brightnessSlider = GameObject.Find("BrightnessSlider").GetComponent<Slider>();
             var tempColor = brightnessImage.color;
             brightnessSlider.value = 1.0f - tempColor.a;
@@ -231,12 +231,20 @@ public class MenuUIHandler : MonoBehaviour
     public void ToggleFullScreen(bool isFullscreen)
     {
         //toggles fullscreen mode via bool in event system.
-        Screen.fullScreen = isFullscreen;
+        if (uiToggleFull.isOn == true)
+        {
+            Screen.fullScreen = isFullscreen;
+        }
+        else
+        {
+            Screen.fullScreen = !isFullscreen;
+        }
+
 
     }
     public void Save()
     {
-        data.fullScreen = Screen.fullScreen;
+        data.fullscreenPref = uiToggleFull.isOn;
         data.savedResolution = resolutionDropdown.value;
         data.brightnessSlider = brightnessSlider.value;
         data.qualityIndex = graphicsDropdown.value;
@@ -255,8 +263,8 @@ public class MenuUIHandler : MonoBehaviour
         {
             data = serializer.Deserialize(stream) as SavedSettingsData;
         }
-        
-        Screen.fullScreen = data.fullScreen;
+
+        uiToggleFull.isOn = data.fullscreenPref;
         brightnessSlider.value = data.brightnessSlider;
         resolutionDropdown.value = data.savedResolution;
         graphicsDropdown.value = data.qualityIndex;

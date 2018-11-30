@@ -50,6 +50,7 @@ public class CharCustomSet : MonoBehaviour
 
         meshFilt = GameObject.Find("CharModel").GetComponent<MeshFilter>();
 
+
         //meshFilt = GameObject.Find("CharModel").GetComponent<MeshFilter>();
         
         //if (meshFilt)
