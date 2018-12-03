@@ -17,7 +17,9 @@ public class BulletC : MonoBehaviour
     // Update is called once per frame
     public void Fire(Vector3 direction)
     {
+        //adds a impulse force to the bullet rigidbody in the direction * speed
         bRigid.AddForce(direction * bSpeed, ForceMode.Impulse);
+        //Destroys gameobject after 2 secs
         Destroy(gameObject,2);
     }
 }

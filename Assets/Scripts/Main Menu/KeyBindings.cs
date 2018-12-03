@@ -7,34 +7,43 @@ using System;
 using System.Xml.Serialization;
 
 [Serializable]
+//Class used to save the keyData
 public class KeyData
 {
+    //keycodes listed as forward, back, left, right etc...
     public KeyCode forward, back, left, right, jump, sprint, fire, test;
 }
 public class KeyBindings : MonoBehaviour
 {
-
+    //Textmesh pro UI elements 
     public TextMeshProUGUI forwardText;
     public TextMeshProUGUI backText, leftText, rightText, sprintText, jumpText, fireText, testText;
 
-    //private Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>();
+    //the clicked current key
     private GameObject currentKey;
+    //the data used to contain the saved variables
     private KeyData data = new KeyData();
 
+    //string for the saveFilePath variable
     public string saveFilePath;
+    //string of the file name
     public string fileName = "GameData";
+    //the Keybindings script is set to static to allow access from the KeyData CLass
     public static KeyBindings Instance = null;
     public Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>();
     // Use this for initialization
     private void Awake()
     {
+        //create this script
         Instance = this;
-
+        //save file path is set to /SaveData/Data + the file's name + the xml file directory
         saveFilePath = Application.dataPath + "/SaveData/Data/" + fileName + ".xml";
+        //if the file exists in the saveFilePath
         if (File.Exists(saveFilePath))
         {
 
-            Load();
+            Load();//loads the data
+            //Loads the text into the keys under their respective buttons (converts it to string)
             forwardText.text = keys["ForwardButton"].ToString();
             backText.text = keys["BackButton"].ToString();
             leftText.text = keys["LeftButton"].ToString();
@@ -47,108 +56,49 @@ public class KeyBindings : MonoBehaviour
     }
     private void OnDestroy()
     {
+
         Instance = null;
+        //Saves the data
         Save();
     }
-    void Start()
-    {
-        //string forward = PlayerPrefs.GetString("Forward");
-        //data.keys.Add("Forward",(KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Forward", "W")));
-        //data.keys.Add("Back", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Back", "S")));
-        //data.keys.Add("Left", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Left", "A")));
-        //data.keys.Add("Right", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Right", "D")));
-        //data.keys.Add("Jump", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Jump", "Space")));
-        //data.keys.Add("Sprint", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Sprint", "LeftShift")));
-        //data.keys.Add("Fire", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Fire", "Mouse0")));
-        //data.keys.Add("Test", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Test", "J")));
-
-        //forwardText.text = data.keys["Forward"].ToString();
-        //backText.text = data.keys["Back"].ToString();
-        //leftText.text = data.keys["Left"].ToString();
-        //rightText.text = data.keys["Right"].ToString();
-        //jumpText.text = data.keys["Jump"].ToString();
-        //sprintText.text = data.keys["Sprint"].ToString();
-        //fireText.text = data.keys["Fire"].ToString();
-        //testText.text = data.keys["Test"].ToString();
-    }
-
-    //void OnApplicationPause(bool pauseStatus)
-    //{
-    //    if (pauseStatus)
-    //        SaveKeys();
-    //}
 
 
-    void Update()
-    {
-        //if (Input.GetKeyDown(keys["Forward"]))
-        //{
-        //    Debug.Log("Forward");
-        //}
-        //if (Input.GetKeyDown(keys["Back"]))
-        //{
-        //    Debug.Log("Back");
-        //}
-        //if (Input.GetKeyDown(keys["Left"]))
-        //{
-        //    Debug.Log("Left");
-        //}
-        //if (Input.GetKeyDown(keys["Right"]))
-        //{
-        //    Debug.Log("Right");
-        //}
-        //if (Input.GetKeyDown(keys["Jump"]))
-        //{
-        //    Debug.Log("Jump");
-        //}
-        //if (Input.GetKeyDown(keys["Sprint"]))
-        //{
-        //    Debug.Log("Sprint");
-        //}
-        //if (Input.GetKeyDown(keys["Fire"]))
-        //{
-        //    Debug.Log("Fire");
-        //}
-        //if (Input.GetKeyDown(keys["Test"]))
-        //{
-        //    Debug.Log("Test");
-        //}
-    }
     void OnGUI()
     {
+        //if the current key isn't null
         if (currentKey != null)
         {
+            //allows you to change the text in the button
             Event e = Event.current;
+            //if the event is reading a keyboard input
             if (e.isKey)
             {
                 Debug.Log(currentKey.name);
+                //changes the key to the key input into the keyboard and converts the keycode to string
                 keys[currentKey.name] = e.keyCode;
                 currentKey.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = e.keyCode.ToString();
+                //sets the current key as now null
                 currentKey = null;
             }
         }
     }
     public void ChangeKey(GameObject clicked)
     {
+        //when the gameobject is clicked, the current key that is clicked allows for input of new keys
         currentKey = clicked;
 
     }
-    //public void SaveKeys()
-    //{
-    //    foreach (var key in keys)
-    //    {
-    //        PlayerPrefs.SetString(key.Key, key.Value.ToString());
-    //    }
-    //    PlayerPrefs.Save();
-    //    Debug.Log("Save");
-    //}
+
     public void Save()
     {
+        //new xmlSerialiser containing the data types in KeyData, and creates a save file in the saveFilePath
         var serializer = new XmlSerializer(typeof(KeyData));
         using (var stream = new FileStream(saveFilePath, FileMode.Create))
         {
+            //serializes the data in stream
             serializer.Serialize(stream, data);
         }
+        //grabs the keycodes name in KeyData and sets them as the keys in each button
         data.forward = keys["ForwardButton"];
         data.back = keys["BackButton"];
         data.left = keys["LeftButton"];
@@ -162,6 +112,7 @@ public class KeyBindings : MonoBehaviour
     }
     public void Load()
     {
+        //loads the xml file
         var serializer = new XmlSerializer(typeof(KeyData));
         using (var stream = new FileStream(saveFilePath, FileMode.Open))
         {
@@ -169,6 +120,7 @@ public class KeyBindings : MonoBehaviour
 
             
         }
+        //grabs the keys in each keybinding button and sets them as the keycode in KeyData
         keys["ForwardButton"] = data.forward;
         keys["BackButton"] = data.back;
         keys["LeftButton"] = data.left;
