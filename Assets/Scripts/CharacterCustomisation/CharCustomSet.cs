@@ -26,11 +26,15 @@ public class CharCustomSet : MonoBehaviour
     #region Character
     public string charName = "Name";//player name
     #endregion
-
+    public bool test1;
+    public bool test2;
+    public string yeet1;
+    public string yeet2;
 
     // Use this for initialization
     void Start()
-    {  
+    {
+        test1 = true;
         meshFilt = GameObject.FindGameObjectWithTag("Player").GetComponent<MeshFilter>();
         SetModel("Model", 0);
         statArray = new string[] { "Strength", "Agility", "Constitution", "Elemental", "Charisma", "Intelligence"};
@@ -74,22 +78,64 @@ public class CharCustomSet : MonoBehaviour
     {
         float scrW = Screen.width / 16 ;
         float scrH = Screen.height / 9;
+        #region Index ONGUI test
+        //int i = 0;
 
-        int i = 0;
+        //if (GUI.Button(new Rect(0.25f * scrW, scrH + i * (0.5f * scrH), 0.5f * scrW, 0.5f * scrH), "<"))
+        //{
+        //    //when pressed the button will run SetTexture and grab the Skin Material and move the texture index in the direction  -1
+        //    SetModel("Model", -1);
+        //}
+        //GUI.Box(new Rect(0.75f * scrW, scrH + i * (0.5f * scrH), 1f * scrW, 0.5f * scrH), "Model");
+        ////GUI button on the left of the screen with the contence >
+        //if (GUI.Button(new Rect(1.75f * scrW, scrH + i * (0.5f * scrH), 0.5f * scrW, 0.5f * scrH), ">"))
+        //{
+        //    SetModel("Model", 1);
+        //    //when pressed the button will run SetTexture and grab the Skin Material and move the texture index in the direction  1
+        //}
+        //i++;
+        #endregion
+        if (test1 == true)
+        {
+            GUI.Box(new Rect(1.35f * scrW, 5.5f * scrH, 1f * scrW, 0.5f * scrH), "Capsule");
+            GUI.Box(new Rect(0.85f * scrW, 5.5f * scrH, 0.5f * scrW, 0.5f * scrH), "");
+            if (GUI.Button(new Rect(2.35f * scrW, 5.5f * scrH, 0.5f * scrW, 0.5f * scrH), ">"))
+            {
+                SetModel("Model", 1);
+                test1 = false;
+                test2 = true;
+                //when pressed the button will run SetTexture and grab the Skin Material and move the texture index in the direction  1
+            }
+            //GUI button on the left of the screen with the contence >
 
-        if (GUI.Button(new Rect(0.25f * scrW, scrH + i * (0.5f * scrH), 0.5f * scrW, 0.5f * scrH), "<"))
-        {
-            //when pressed the button will run SetTexture and grab the Skin Material and move the texture index in the direction  -1
-            SetModel("Model", -1);
         }
-        GUI.Box(new Rect(0.75f * scrW, scrH + i * (0.5f * scrH), 1f * scrW, 0.5f * scrH), "Model");
-        //GUI button on the left of the screen with the contence >
-        if (GUI.Button(new Rect(1.75f * scrW, scrH + i * (0.5f * scrH), 0.5f * scrW, 0.5f * scrH), ">"))
+        if (test2)
         {
-            SetModel("Model", 1);
-            //when pressed the button will run SetTexture and grab the Skin Material and move the texture index in the direction  1
+            GUI.Box(new Rect(1.35f * scrW, 5.5f * scrH, 1f * scrW, 0.5f * scrH), "Cylinder");
+            GUI.Box(new Rect(2.35f * scrW, 5.5f * scrH, 0.5f * scrW, 0.5f * scrH), "");
+
+            if (GUI.Button(new Rect(0.85f * scrW, 5.5f * scrH, 0.5f * scrW, 0.5f * scrH), "<"))
+            {
+                //when pressed the button will run SetTexture and grab the Skin Material and move the texture index in the direction  -1
+                SetModel("Model", -1);
+                test1 = true;
+                test2 = false;
+            }
+
         }
-        i++;
+        //if (GUI.Button(new Rect(0.85f * scrW, 5.5f * scrH, 0.5f * scrW, 0.5f * scrH), "<"))
+        //{
+        //    //when pressed the button will run SetTexture and grab the Skin Material and move the texture index in the direction  -1
+        //    SetModel("Model", -1);
+        //}
+        //GUI.Box(new Rect(1.35f * scrW, 5.5f * scrH, 1f * scrW, 0.5f * scrH), "Capsule");
+        ////GUI button on the left of the screen with the contence >
+        //if (GUI.Button(new Rect(2.35f * scrW, 5.5f * scrH, 0.5f * scrW, 0.5f * scrH), ">"))
+        //{
+        //    SetModel("Model", 1);
+        //    //when pressed the button will run SetTexture and grab the Skin Material and move the texture index in the direction  1
+        //}
+
 
     }
 
