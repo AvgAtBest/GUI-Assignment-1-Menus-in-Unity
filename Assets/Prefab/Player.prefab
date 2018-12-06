@@ -45,7 +45,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1755645626822978
 GameObject:
   m_ObjectHideFlags: 1
@@ -74,8 +74,9 @@ GameObject:
   - component: {fileID: 136475452694501420}
   - component: {fileID: 143348275453106178}
   - component: {fileID: 114158225681891230}
-  - component: {fileID: 114213812768594940}
   - component: {fileID: 114622849701401840}
+  - component: {fileID: 114735337661953338}
+  - component: {fileID: 114076705659112794}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -115,15 +116,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1995343649994516}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.91, y: 5.25, z: 77.17}
+  m_LocalRotation: {x: -0, y: -0.6076217, z: -0, w: 0.7942266}
+  m_LocalPosition: {x: 9.922, y: 11.734, z: 10.164}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4043570407510338}
   - {fileID: 4388188260562960}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -74.83501, z: 0}
 --- !u!4 &4388188260562960
 Transform:
   m_ObjectHideFlags: 1
@@ -287,13 +288,35 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114076705659112794
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1995343649994516}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 069b98c644b2a1748a8da178336c0298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshes:
+  - {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  meshFilter: {fileID: 33596384070856484}
+  id: 2
+  savedColour:
+  - 0
+  - 0
+  - 0
+  - 0
+  myColour: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114158225681891230
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1995343649994516}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34fb6e615e59d304eac2ae53e5d3f3be, type: 3}
   m_Name: 
@@ -312,29 +335,6 @@ MonoBehaviour:
   sensitivityY: 10
   minimumY: -60
   maximumY: 60
---- !u!114 &114213812768594940
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1995343649994516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 069b98c644b2a1748a8da178336c0298, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meshes:
-  - {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  - {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
-  - {fileID: 4300000, guid: 193956457458d124a9b925a1cd329ae3, type: 3}
-  meshFilter: {fileID: 33596384070856484}
-  id: 2
-  savedColour:
-  - 0.2
-  - 0.2
-  - 0.3
-  - 1
-  myColour: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114622849701401840
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -351,6 +351,26 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+--- !u!114 &114735337661953338
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1995343649994516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf3f7ba9f221ce4fa3350e9c76dfb63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statArray:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  stats: 000000000000000000000000000000000000000000000000
+  characterClass: 0
 --- !u!136 &136475452694501420
 CapsuleCollider:
   m_ObjectHideFlags: 1

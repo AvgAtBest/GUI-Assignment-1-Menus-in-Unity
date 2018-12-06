@@ -11,12 +11,8 @@ public class CharacterHandler : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        //statArray = new string[] { "Strength", "Agility", "Constitution", "Elemental", "Charisma", "Intelligence" };
-        //for (int i = 0; i < statArray.Length; i++)
-        //{
-        //    stats[i] = PlayerPrefs.GetInt(statArray[i], 10);
-        //}
-        //characterClass = (CharacterClass)System.Enum.Parse(typeof(CharacterClass), PlayerPrefs.GetString("CharacterClass", "Barbarian"));
+        statArray = new string[] { "Strength", "Agility", "Constitution", "Elemental", "Charisma", "Intelligence" };
+
     }
 
     // Update is called once per frame

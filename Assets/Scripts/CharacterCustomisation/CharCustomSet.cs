@@ -2,6 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System;
+using System.Xml.Serialization;
+using System.IO;
+
+
+[Serializable]
+public class CharacterData
+{
+    public int pModelIndex;
+    public int charClassIndex;
+
+}
 
 public class CharCustomSet : MonoBehaviour
 {
@@ -21,25 +34,30 @@ public class CharCustomSet : MonoBehaviour
     public int statpoints = 10;//available stats points that can be spent
     public CharacterClass charClass = CharacterClass.Warrior;//Available classes to be chosen (default set to warrior)
     public string[] selectedClass = new string[6];
+    public string[] selectedModel = new string[2];
     public int selectedIndex = 0;
+    public int mIndex = 0;
     #endregion
     #region Character
     public string charName = "Name";//player name
     #endregion
-    public bool test1;
-    public bool test2;
-    public string yeet1;
-    public string yeet2;
+    public bool charS1;
+    public bool class1;
+    public bool cust1;
+    public bool fin1;
 
     // Use this for initialization
     void Start()
     {
-        test1 = true;
+        charS1 = true;
         meshFilt = GameObject.FindGameObjectWithTag("Player").GetComponent<MeshFilter>();
-        SetModel("Model", 0);
-        statArray = new string[] { "Strength", "Agility", "Constitution", "Elemental", "Charisma", "Intelligence"};
+        //SetModel("Model", 0);
+        statArray = new string[] { "Strength", "Agility", "Constitution", "Elemental", "Charisma", "Intelligence" };
         selectedClass = new string[] { "Warrior", "Mage", "Tank", "Hunter", "Healer", "Thief" };
+        selectedModel = new string[] { "Capsule", "Cylinder" };
         AvailableClasses(selectedIndex);
+
+        SetModel("Model", mIndex);
     }
     void SetModel(string type, int next)
     {
@@ -74,55 +92,133 @@ public class CharCustomSet : MonoBehaviour
 
         }
     }
+    public void LoadScene()
+    {
+        SceneManager.LoadScene(2);
+    }
+    public void ToggleCharPanel()
+    {
+        charS1 = true;
+        class1 = false;
+        cust1 = false;
+        fin1 = false;
+    }
+    public void ToggleClassPanel()
+    {
+        charS1 = false;
+        class1 = true;
+        cust1 = false;
+        fin1 = false;
+    }
+    public void ToggleCustPanel()
+    {
+        charS1 = false;
+        class1 = false;
+        cust1 = true;
+        fin1 = false;
+    }
+    public void ToggleFinPan()
+    {
+        charS1 = false;
+        class1 = false;
+        cust1 = false;
+        fin1 = true;
+    }
     private void OnGUI()
     {
-        float scrW = Screen.width / 16 ;
+        float scrW = Screen.width / 16;
         float scrH = Screen.height / 9;
-        #region Index ONGUI test
-        //int i = 0;
 
-        //if (GUI.Button(new Rect(0.25f * scrW, scrH + i * (0.5f * scrH), 0.5f * scrW, 0.5f * scrH), "<"))
-        //{
-        //    //when pressed the button will run SetTexture and grab the Skin Material and move the texture index in the direction  -1
-        //    SetModel("Model", -1);
-        //}
-        //GUI.Box(new Rect(0.75f * scrW, scrH + i * (0.5f * scrH), 1f * scrW, 0.5f * scrH), "Model");
-        ////GUI button on the left of the screen with the contence >
-        //if (GUI.Button(new Rect(1.75f * scrW, scrH + i * (0.5f * scrH), 0.5f * scrW, 0.5f * scrH), ">"))
-        //{
-        //    SetModel("Model", 1);
-        //    //when pressed the button will run SetTexture and grab the Skin Material and move the texture index in the direction  1
-        //}
-        //i++;
-        #endregion
-        if (test1 == true)
+        int i = 0;
+
+
+        if (charS1 == true)
         {
-            GUI.Box(new Rect(1.35f * scrW, 5.5f * scrH, 1f * scrW, 0.5f * scrH), "Capsule");
-            GUI.Box(new Rect(0.85f * scrW, 5.5f * scrH, 0.5f * scrW, 0.5f * scrH), "");
+            GUI.Box(new Rect(1.35f * scrW, 5.5f * scrH, 1f * scrW, 0.5f * scrH), selectedModel[mIndex]);
+
             if (GUI.Button(new Rect(2.35f * scrW, 5.5f * scrH, 0.5f * scrW, 0.5f * scrH), ">"))
             {
+                mIndex++;
+
+                if (mIndex > selectedModel.Length - 1)
+                {
+                    mIndex = 0;
+                }
                 SetModel("Model", 1);
-                test1 = false;
-                test2 = true;
-                //when pressed the button will run SetTexture and grab the Skin Material and move the texture index in the direction  1
+
             }
-            //GUI button on the left of the screen with the contence >
-
-        }
-        if (test2)
-        {
-            GUI.Box(new Rect(1.35f * scrW, 5.5f * scrH, 1f * scrW, 0.5f * scrH), "Cylinder");
-            GUI.Box(new Rect(2.35f * scrW, 5.5f * scrH, 0.5f * scrW, 0.5f * scrH), "");
-
             if (GUI.Button(new Rect(0.85f * scrW, 5.5f * scrH, 0.5f * scrW, 0.5f * scrH), "<"))
             {
                 //when pressed the button will run SetTexture and grab the Skin Material and move the texture index in the direction  -1
+
+                mIndex--;
+                if (mIndex < 0)
+                {
+                    mIndex = selectedModel.Length - 1;
+                }
                 SetModel("Model", -1);
-                test1 = true;
-                test2 = false;
             }
+        }
+
+
+        if (class1)
+        {
+            #region CharClass
+            i = 0;
+            GUI.Box(new Rect(0.95f * scrW, 2f * scrH + i * (0.75f * scrH), 1.85f * scrW, 0.5f * scrH), "Class");
+            i++;
+            GUI.Box(new Rect(1.35f * scrW, 2.25f * scrH + i * (0.75f * scrH), 1f * scrW, 0.5f * scrH), selectedClass[selectedIndex]);
+
+
+            if (GUI.Button(new Rect(2.35f * scrW, 2.25f * scrH + i * (0.75f * scrH), 0.5f * scrW, 0.5f * scrH), ">"))
+            {
+                selectedIndex++;
+                if (selectedIndex > selectedClass.Length - 1)
+                {
+                    selectedIndex = 0;
+                }
+                AvailableClasses(selectedIndex);
+
+            }
+            if (GUI.Button(new Rect(0.85f * scrW, 2.25f * scrH + i * (0.75f * scrH), 0.5f * scrW, 0.5f * scrH), "<"))
+            {
+                selectedIndex--;
+                if (selectedIndex < 0)
+                {
+                    selectedIndex = selectedClass.Length - 1;
+                }
+                AvailableClasses(selectedIndex);
+            }
+            #endregion
+            #region Stats
+            GUI.Box(new Rect(1.35f * scrW, 3.5f * scrH, 1f * scrW, 0.5f * scrH), "P:" + statpoints);
+            for (int s = 0; s < 6; s++)
+            {
+                if (statpoints > 0)
+                {
+                    if (GUI.Button(new Rect(2.65f * scrW, 4f * scrH + s * (0.5f * scrH), 0.75f * scrW, 0.5f * scrH), "+ "))
+
+                    {
+                        statpoints--;
+                        tempStats[s]++;
+                    }
+                }
+                //left hand side width   //height down                       //right width   //hight up
+                GUI.Box(new Rect(1f * scrW, 4f * scrH + s * (0.5f * scrH), 1.65f * scrW, 0.5f * scrH), statArray[s] + ": " + (stats[s] + tempStats[s]));
+                if (statpoints < 10 && tempStats[s] > 0)
+                {
+                    if (GUI.Button(new Rect(0.25f * scrW, 4f * scrH + s * (0.5f * scrH), 0.75f * scrW, 0.5f * scrH), "- "))
+                    {
+                        statpoints++;
+                        tempStats[s]--;
+                    }
+
+                }
+            }
+            #endregion
 
         }
+
         //if (GUI.Button(new Rect(0.85f * scrW, 5.5f * scrH, 0.5f * scrW, 0.5f * scrH), "<"))
         //{
         //    //when pressed the button will run SetTexture and grab the Skin Material and move the texture index in the direction  -1
@@ -214,4 +310,3 @@ public enum CharacterClass
     Thief
 
 }
-

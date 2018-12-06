@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Xml.Serialization;
+using System.IO;
 
 public class CharCustGet : MonoBehaviour
 {
@@ -17,5 +19,8 @@ public class CharCustGet : MonoBehaviour
         this.GetComponent<MeshRenderer>().material.color = myColour;
     }
 	
+    void Load()
+    {
 
+    }
 }
