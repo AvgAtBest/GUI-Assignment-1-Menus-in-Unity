@@ -98,18 +98,7 @@ public class MenuUIHandler : MonoBehaviour
         resolutionDropdown.RefreshShownValue();
         uiToggleFull.isOn = true;
         #endregion
-        #region Sound (Attempts to get the save sound to play at the start)
-        //musicAudio = GameObject.Find("MainMenuMusic").GetComponent<AudioSource>();
-        //musicSlider.value = -25f;
-        //musicSlider.value = musicAudio.volume;
-
-        //interfaceAudioSlider.value = -25f;
-        //musicSlider.value = -25f;
-        //musicSlider.value = musicAudio.volume;
-        //interfaceAudioSlider.value = interfaceAudio.volume;
-        //musicSlider.value = PlayerPrefs.GetFloat("MainMixer", -25f);
-        //effectsAudioSlider.value = PlayerPrefs.GetFloat("SoundEffect", -25f);
-        #endregion
+        
 
         #region Brightness
         //temporary color is equal to the current color of the image
@@ -124,6 +113,16 @@ public class MenuUIHandler : MonoBehaviour
             //calls the load function
             Load();
         }
+    }
+    private void Start()
+    {
+        #region Sound (Attempts to get the save sound to play at the start)
+
+        MusicVolume(musicSlider.value);
+        InterfaceVolume(interfaceAudioSlider.value);
+
+        #endregion
+
     }
     public void PlayGame()
     {
@@ -167,8 +166,11 @@ public class MenuUIHandler : MonoBehaviour
             //options menu is active
             //Gets the Slider component from the tagged game object music Slider
             musicSlider = GameObject.FindGameObjectWithTag("MusicSlider").GetComponent<Slider>();
+            MusicVolume(musicSlider.value);
             //Gets the  Slider component from the tagged game object Inteface Slider
             interfaceAudioSlider = GameObject.FindGameObjectWithTag("InterfaceEffectsSlider").GetComponent<Slider>();
+            InterfaceVolume(interfaceAudioSlider.value);
+
             //Gets the  dropdown component from the  game object resolution dropdown
             resolutionDropdown = GameObject.Find("ResolutionDropDown").GetComponent<Dropdown>();
             //Gets the  dropdown component from the  game object graphics dropdown

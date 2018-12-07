@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<CharacterData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <pModelIndex>0</pModelIndex>
+  <charClassIndex>0</charClassIndex>
+  <pName>Test</pName>
+  <sClass>Mage</sClass>
+  <modelIndexffs>0</modelIndexffs>
+  <idColor>
+    <r>0</r>
+    <g>0</g>
+    <b>0</b>
+    <a>0</a>
+  </idColor>
+  <rgba>
+    <float>0.0196078438</float>
+    <float>0</float>
+    <float>0.06666667</float>
+    <float>1</float>
+  </rgba>
+  <mymesheses />
+  <myMesh>0</myMesh>
+  <savedStats>
+    <int>4</int>
+    <int>6</int>
+    <int>5</int>
+    <int>10</int>
+    <int>5</int>
+    <int>7</int>
+  </savedStats>
+  <statArray>
+    <string>Strength</string>
+    <string>Agility</string>
+    <string>Constitution</string>
+    <string>Elemental</string>
+    <string>Charisma</string>
+    <string>Intelligence</string>
+  </statArray>
+</CharacterData>

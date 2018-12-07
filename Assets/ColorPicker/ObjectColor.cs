@@ -3,6 +3,13 @@ using System.Collections;
 
 public class ObjectColor : MonoBehaviour
 {
+    CharCustomSet saveLocation;
+
+    private void Awake()
+    {
+        saveLocation = GameObject.Find("Custom").GetComponent<CharCustomSet>();
+    }
+
     public float[] rgba = new float[4];
 	void OnSetColor(Color color)
 	{
@@ -21,5 +28,7 @@ public class ObjectColor : MonoBehaviour
 	{
 		picker.NotifyColor(GetComponent<Renderer>().material.color);
         Debug.Log(GetComponent<Renderer>().material.color.ToString());
-	}
+        saveLocation.characterColour = GetComponent<Renderer>().material.color;
+
+    }
 }

@@ -14,7 +14,7 @@ public class ColorPicker : MonoBehaviour {
 	public int drawOrder = 0;
 
 	private Color TempColor; 
-	private Color SelectedColor;
+	public Color SelectedColor;
 
 	static ColorPicker activeColorPicker = null;
 

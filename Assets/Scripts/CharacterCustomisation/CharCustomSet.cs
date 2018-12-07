@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using System;
 using System.Xml.Serialization;
 using System.IO;
+using UnityEngine.EventSystems;
 
 
 [Serializable]
@@ -13,7 +14,16 @@ public class CharacterData
 {
     public int pModelIndex;
     public int charClassIndex;
-
+    public string pName;
+    public string sClass;
+    public int modelIndexffs;
+    public Color idColor;
+    public float[] rgba = new float[4];
+    public Mesh[] mymesheses;
+    public int myMesh;
+    public int[] savedStats;
+    public string[] statArray;
+    
 }
 
 public class CharCustomSet : MonoBehaviour
@@ -40,25 +50,46 @@ public class CharCustomSet : MonoBehaviour
     #endregion
     #region Character
     public string charName = "Name";//player name
+    public GameObject nameInputUI;
+    public GameObject player;
+    public Color characterColour;
+
     #endregion
+    #region Toggling UI
     public bool charS1;
     public bool class1;
     public bool cust1;
     public bool fin1;
+    #endregion
+    #region Save
+    public string fileName = "PlayerData";
+    public string filePath;
+    public CharacterData charData = new CharacterData();
 
-    // Use this for initialization
-    void Start()
+    #endregion
+
+    public ColorPicker pickedColour;
+
+    void Awake()
     {
         charS1 = true;
         meshFilt = GameObject.FindGameObjectWithTag("Player").GetComponent<MeshFilter>();
-        //SetModel("Model", 0);
         statArray = new string[] { "Strength", "Agility", "Constitution", "Elemental", "Charisma", "Intelligence" };
         selectedClass = new string[] { "Warrior", "Mage", "Tank", "Hunter", "Healer", "Thief" };
         selectedModel = new string[] { "Capsule", "Cylinder" };
         AvailableClasses(selectedIndex);
+        SetModel("Model", modelIndex);
 
-        SetModel("Model", mIndex);
+        filePath = Application.dataPath + "/SaveData/Data/" + fileName + ".xml";
+
     }
+
+    private void Update()
+    {
+        charName = nameInputUI.GetComponent<Text>().text;
+    }
+
+
     void SetModel(string type, int next)
     {
         // int i = 0, next = 0,
@@ -95,6 +126,7 @@ public class CharCustomSet : MonoBehaviour
     public void LoadScene()
     {
         SceneManager.LoadScene(2);
+        Save();
     }
     public void ToggleCharPanel()
     {
@@ -134,16 +166,11 @@ public class CharCustomSet : MonoBehaviour
 
         if (charS1 == true)
         {
-            GUI.Box(new Rect(1.35f * scrW, 5.5f * scrH, 1f * scrW, 0.5f * scrH), selectedModel[mIndex]);
+            GUI.Box(new Rect(1.35f * scrW, 5.5f * scrH, 1f * scrW, 0.5f * scrH), selectedModel[modelIndex]);
 
             if (GUI.Button(new Rect(2.35f * scrW, 5.5f * scrH, 0.5f * scrW, 0.5f * scrH), ">"))
             {
-                mIndex++;
-
-                if (mIndex > selectedModel.Length - 1)
-                {
-                    mIndex = 0;
-                }
+               
                 SetModel("Model", 1);
 
             }
@@ -151,11 +178,7 @@ public class CharCustomSet : MonoBehaviour
             {
                 //when pressed the button will run SetTexture and grab the Skin Material and move the texture index in the direction  -1
 
-                mIndex--;
-                if (mIndex < 0)
-                {
-                    mIndex = selectedModel.Length - 1;
-                }
+              
                 SetModel("Model", -1);
             }
         }
@@ -235,6 +258,7 @@ public class CharCustomSet : MonoBehaviour
 
     }
 
+  
 
     void AvailableClasses(int className)
     {
@@ -298,6 +322,39 @@ public class CharCustomSet : MonoBehaviour
         }
 
 
+    }
+    public void Save()
+    {
+        //charData.meshIndex[modelIndex] = modelIndex;
+        //charData.pName = charName;
+
+        //name
+        //4 floats of colour
+        //mesh index
+
+        charData.pName = charName;
+
+        //charData.idColor = characterColour;
+
+        float[] fookColour = new float[4];
+        fookColour[0] = pickedColour.SelectedColor.r;
+        fookColour[1] = pickedColour.SelectedColor.g;
+        fookColour[2] = pickedColour.SelectedColor.b;
+        fookColour[3] = pickedColour.SelectedColor.a;
+
+        charData.rgba = fookColour;
+        
+        Debug.Log("I AM SAVING " + charData.rgba);
+        charData.myMesh = modelIndex;
+        charData.sClass = selectedClass[selectedIndex].ToString();
+
+        charData.savedStats = stats;
+        charData.statArray = statArray;
+        var serializer = new XmlSerializer(typeof(CharacterData));
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            serializer.Serialize(stream, charData);
+        }
     }
 }
 public enum CharacterClass

@@ -70,7 +70,7 @@ public class InGameMenu : MonoBehaviour
             string option = resolutions[i].width + "x" + resolutions[i].height;
             //adds the resolution option to our list
             options.Add(option);
-            Debug.Log("This option is " + option.ToString());
+            //Debug.Log("This option is " + option.ToString());
 
             //if resolutions is equal to the monitors resolutions (by comparing the width and the height of our resolution)
             if (resolutions[i].width == Screen.currentResolution.width &&
