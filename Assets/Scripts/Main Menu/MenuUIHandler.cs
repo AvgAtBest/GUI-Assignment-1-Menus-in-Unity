@@ -116,8 +116,9 @@ public class MenuUIHandler : MonoBehaviour
     }
     private void Start()
     {
-        #region Sound (Attempts to get the save sound to play at the start)
+        #region Sound 
 
+        //Sets the volume of the audio mixers to match the value of their respective sliders on start
         MusicVolume(musicSlider.value);
         InterfaceVolume(interfaceAudioSlider.value);
 

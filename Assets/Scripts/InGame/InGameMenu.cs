@@ -114,6 +114,7 @@ public class InGameMenu : MonoBehaviour
     }
     void Start()
     {
+        //upon loading into the scene, the time scale is set to one, and the game is unpaused
         Time.timeScale = 1;
         gameMenu.SetActive(false);
         paused = false;
@@ -134,10 +135,7 @@ public class InGameMenu : MonoBehaviour
             }
             else
             {
-                Time.timeScale = 0;
-                gameMenu.SetActive(true);
-                //playerUI.SetActive(false);
-                paused = true;
+                Paused();
             }
         }
     }
@@ -178,6 +176,13 @@ public class InGameMenu : MonoBehaviour
 
 
         }
+    }
+    public void Paused()
+    {
+        Time.timeScale = 0;
+        gameMenu.SetActive(true);
+        //playerUI.SetActive(false);
+        paused = true;
     }
     //music Audio Mixer controller
     public void MusicVolume(float musicVolume)
@@ -240,12 +245,14 @@ public class InGameMenu : MonoBehaviour
     }
     public void Resume()
     {
+        //upon pressing resume, the game will be unpaused, and the menu will be turned off
         paused = false;
         gameMenu.SetActive(false);
         Time.timeScale = 1;
     }
     public void ReturnToMainMenu()
     {
+        //Returns to the main menu
         SceneManager.LoadScene(0);
     }
     public void Quit()

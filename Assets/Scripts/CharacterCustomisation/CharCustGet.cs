@@ -34,11 +34,12 @@ public class CharCustGet : MonoBehaviour
         player = GameObject.Find("Player");
         //load here
         Instance = this;
-
+        //The File path where the file will be loaded from
         filePath = Application.dataPath + "/SaveData/Data/" + fileName + ".xml";
-
+        //if the filepath and file exists
         if (File.Exists(filePath))
         {
+            //calls load function
             Load();
         }
 
@@ -47,30 +48,36 @@ public class CharCustGet : MonoBehaviour
 
     private void Start()
     {
+        //the array of the stat names
         statArray = new string[] { "Strength", "Dexterity", "Constitution", "Wisdom", "Intelligence", "Charism" };
-
+        //the players mesh and mesh filter via the id index
         meshFilter.mesh = meshes[id];
-        //myColour = new Vector4(savedColour[0], savedColour[1], savedColour[2], savedColour[3]);
-        //this.GetComponent<MeshRenderer>().material.color = myColour;
+
     }
     void Load()
     {
+        //Loads the stored data in CharacterData
         var serializer = new XmlSerializer(typeof(CharacterData));
         using (var stream = new FileStream(filePath, FileMode.Open))
         {
             charData = serializer.Deserialize(stream) as CharacterData;
         }
+        //loads the stats from the charData savedStats variable
         stats = charData.savedStats;
+        //loads the stat name from the charData stat arrays
         statArray = charData.statArray;
-        //myColour = charData.idColor;
+        //the players name is the name from charData pName variable
         player.gameObject.name = charData.pName;
-
+        //color via the rgba variables
         myColour = new Vector4(charData.rgba[0], charData.rgba[1], charData.rgba[2], charData.rgba[3]);
 
         Debug.Log("I AM LOADING " + charData.idColor);
-        player.GetComponent<Renderer>().material.color = myColour;
 
+        //gets the renderer component and its material and color and changes it to mycolor
+        player.GetComponent<Renderer>().material.color = myColour;
+        //loads the charData mesh from the id
         id = charData.myMesh;
+        //loads the character class name and converts enum to string
         charClass = (CharacterClass)System.Enum.Parse(typeof(CharacterClass), charData.sClass);
     }
 }
